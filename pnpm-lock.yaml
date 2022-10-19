@@ -11,7 +11,10 @@ importers:
       react-dom: 18.2.0_react@18.2.0
 
   packages/nmi:
-    specifiers: {}
+    specifiers:
+      commander: ^9.4.1
+    dependencies:
+      commander: 9.4.1
 
   packages/test:
     specifiers:
@@ -20,6 +23,11 @@ importers:
       '@factor/nmi': link:../nmi
 
 packages:
+
+  /commander/9.4.1:
+    resolution: {integrity: sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==}
+    engines: {node: ^12.20.0 || >=14}
+    dev: false
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
