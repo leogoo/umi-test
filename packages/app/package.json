@@ -1,15 +1,19 @@
 {
-  "name": "test",
+  "name": "app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nmi"
+    "build": "pnpm esbuild src/* --bundle --outdir=www",
+    "serve": "cd www && serve -l 8000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@factor/nmi": "workspace:^0.0.1"
+  },
+  "devDependencies": {
+    "serve": "^14.0.1"
   }
 }

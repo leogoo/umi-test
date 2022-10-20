@@ -1,25 +1,32 @@
 #!/usr/bin/env node
 
 const {
-  program
+  Command
 } = require('commander');
+
+const program = new Command();
 
 program
   .version(require('../package.json').version, '-v, -V', '输出当前框架的版本')
-  .description('重复造轮子之nmi')
-  .usage('<command> [options]')
-  .parse(process.argv)
+  .description('手写前端框架的产物框架')
+  .usage('<command> [options]');
 
 program.command('help')
-    .alias('-h')
-    .description('帮助命令')
-    .action(function(name, other) {
-        console.log(`类umi脚手架
+  .alias('-h')
+  .description('帮助命令')
+  .action(function(name, other) {
+      console.log(`手写前端框架的产物框架nmi
 
 支持的命令:
-  version, -v,-V 输出当前框架的版本
-  help,-h 输出帮助程序
+version, -v,-V 输出当前框架的版本
+help,-h 输出帮助程序
 
 Example call:
-    $ nmi <command> --help`)
-    }).parse(process.argv);
+  $ nmi <command> --help`)
+  });
+
+program.command('dev').description('框架开发命令').action(function() {
+  require('../lib/dev')
+});
+
+program.parse(process.argv);
