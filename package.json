@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/leogoo/factor#readme",
   "dependencies": {
+    "@types/node": "^18.11.2",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

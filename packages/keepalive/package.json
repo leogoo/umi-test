@@ -1,0 +1,19 @@
+{
+  "name": "@factor/keepalive",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "publishConfig": { "access": "public" },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-router": "^6.4.2",
+    "react-router-dom": "^6.4.2"
+  }
+}

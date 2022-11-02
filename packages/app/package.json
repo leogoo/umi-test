@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm esbuild src/* --bundle --outdir=www",
-    "serve": "cd www && serve -l 8000"
+    "build": "pnpm esbuild src/** --bundle --outdir=www",
+    "dev": "nmi dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@factor/nmi": "workspace:^0.0.1"
+    "@factor/nmi": "workspace:^0.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.4.2",
+    "react-router-dom": "^6.4.2"
   },
   "devDependencies": {
     "serve": "^14.0.1"
