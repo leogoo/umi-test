@@ -1,10 +1,11 @@
 import express from 'express';
 import { createServer } from 'http';
+import fs from 'fs';
 import { serve, build, ServeOnRequestArgs } from 'esbuild';
-import path from 'path';
+import path, { resolve } from 'path';
 import portfinder from 'portfinder';
-import { DEFAULT_ENTRY_POINT, DEFAULT_OUTDIR, DEFAULT_PLATFORM, DEFAULT_PORT, DEFAULT_HOST, DEFAULT_BUILD_PORT } from './constants';
-import { createWebSocketServer } from './server';
+import { DEFAULT_OUTDIR, DEFAULT_PORT, DEFAULT_PLATFORM } from './constants';
+import { generateEntry, generateHtml, getAppData, getRoutes, getUserConfig, getMockConfig } from './utils';
 
 export const dev = async () => {
   const cwd = process.cwd();
@@ -18,58 +19,53 @@ export const dev = async () => {
   app.use(`/${DEFAULT_OUTDIR}`, express.static(esbuildOutput));
   // __dirname = /lib
   app.use(`/nmi`, express.static(path.resolve(__dirname, 'client')));
-  
-  app.get('/', (_req, res) => {
+  app.get('/', (_req, res, next) => {
     res.set('Content-Type', 'text/html');
-    res.send(`<!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <title>nmi</title>
-    </head>
-    
-    <body>
-        <div id="nmi">
-            <span>loading...</span>
-        </div>
-        <script src="/${DEFAULT_OUTDIR}/index.js"></script>
-    </body>
-    </html>`);
+    const output = path.resolve(cwd, DEFAULT_OUTDIR);
+    const htmlPath = path.join(output, 'index.html');
+    if (fs.existsSync(htmlPath)) {
+      fs.createReadStream(htmlPath).on('error', next).pipe(res);
+    } else {
+      next();
+    }
   });
   
   const nmiServer = createServer(app);
-  const ws = createWebSocketServer(nmiServer);
-
-  function sendMessage(type: string, data?: any) {
-      ws.send(JSON.stringify({ type, data }));
-  }
-
-  nmiServer.listen(port, async ()=>{
-    console.log(`listening at ${port}`);
-    try {
-      await build({
-        outdir: esbuildOutput,
+  //修改用户配置，重启服务
+  nmiServer.on('rebuild', async () => {
+    console.log('rebuild');
+    buildMain(nmiServer);
+  });
+  
+  const buildMain = async (nmiServer) => {
+    const appData = getAppData(cwd);
+    const routes = getRoutes(appData);
+    // 获取用户配置
+    const mockConfig = await getUserConfig({appData, nmiServer});
+    // mock中间件
+    app.use((req, res, next) => {
+      
+    });
+    // mock配置
+    await getMockConfig({appData, nmiServer});
+    // 生成入口文件src/index
+    await generateEntry({ appData, routes});
+    // 生成html
+    await generateHtml({ appData});
+    // 由上面生成的入口文件打包
+    await build({
+        outdir: appData.paths.absOutputPath,
         platform: DEFAULT_PLATFORM,
         bundle: true,
-        watch: {
-          onRebuild: (err, res) => {
-            if (err) {
-              console.log(JSON.stringify(err));
-              return;
-            }
-            sendMessage('reload')
-          }
-        },
         define: {
           'process.env.NODE_ENV': JSON.stringify('development'),
         },
         external: ['esbuild'],
-        entryPoints: [path.resolve(cwd, DEFAULT_ENTRY_POINT)],
+        entryPoints: [appData.paths.absEntryPath],
       })
-    } catch (e) {
-      console.log(e);
-      process.exit(1);
-    }
-  });
+  }
+  nmiServer.listen(port, async ()=>{
+    console.log(`listening at ${port}`);
+    buildMain(nmiServer)
+  })
 }

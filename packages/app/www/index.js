@@ -714,7 +714,7 @@
             }
             return children;
           }
-          function createContext3(defaultValue) {
+          function createContext2(defaultValue) {
             var context = {
               $$typeof: REACT_CONTEXT_TYPE,
               _currentValue: defaultValue,
@@ -986,7 +986,7 @@
             }
             return dispatcher;
           }
-          function useContext4(Context) {
+          function useContext3(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1008,7 +1008,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef4(initialValue) {
+          function useRef3(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
@@ -1778,7 +1778,7 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext3;
+          exports.createContext = createContext2;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1789,7 +1789,7 @@
           exports.startTransition = startTransition;
           exports.unstable_act = act;
           exports.useCallback = useCallback3;
-          exports.useContext = useContext4;
+          exports.useContext = useContext3;
           exports.useDebugValue = useDebugValue2;
           exports.useDeferredValue = useDeferredValue;
           exports.useEffect = useEffect4;
@@ -1799,7 +1799,7 @@
           exports.useLayoutEffect = useLayoutEffect4;
           exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
-          exports.useRef = useRef4;
+          exports.useRef = useRef3;
           exports.useState = useState5;
           exports.useSyncExternalStore = useSyncExternalStore2;
           exports.useTransition = useTransition;
@@ -2296,9 +2296,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React7 = require_react();
+          var React6 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React7.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React6.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3819,7 +3819,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React7.Children.forEach(props.children, function(child) {
+                  React6.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -11980,7 +11980,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React7.Component().refs;
+          var emptyRefsObject = new React6.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -13440,7 +13440,7 @@
           var NoFlags$1 = 0;
           var HasEffect = 1;
           var Insertion = 2;
-          var Layout2 = 4;
+          var Layout = 4;
           var Passive$1 = 8;
           var workInProgressSources = [];
           function resetWorkInProgressVersions() {
@@ -14135,10 +14135,10 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout2, create, deps);
+            return mountEffectImpl(fiberFlags, Layout, create, deps);
           }
           function updateLayoutEffect(create, deps) {
-            return updateEffectImpl(Update, Layout2, create, deps);
+            return updateEffectImpl(Update, Layout, create, deps);
           }
           function imperativeHandleEffect(create, ref) {
             if (typeof ref === "function") {
@@ -14176,7 +14176,7 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return mountEffectImpl(fiberFlags, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function updateImperativeHandle(ref, create, deps) {
             {
@@ -14185,7 +14185,7 @@
               }
             }
             var effectDeps = deps !== null && deps !== void 0 ? deps.concat([ref]) : null;
-            return updateEffectImpl(Update, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return updateEffectImpl(Update, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function mountDebugValue(value, formatterFn) {
           }
@@ -18030,7 +18030,7 @@
           };
           function safelyCallCommitHookLayoutEffectListMount(current2, nearestMountedAncestor) {
             try {
-              commitHookEffectListMount(Layout2, current2);
+              commitHookEffectListMount(Layout, current2);
             } catch (error2) {
               captureCommitPhaseError(current2, nearestMountedAncestor, error2);
             }
@@ -18205,7 +18205,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStarted(finishedWork);
-                      } else if ((flags & Layout2) !== NoFlags$1) {
+                      } else if ((flags & Layout) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStarted(finishedWork);
                       }
                     }
@@ -18223,7 +18223,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStopped();
-                      } else if ((flags & Layout2) !== NoFlags$1) {
+                      } else if ((flags & Layout) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStopped();
                       }
                     }
@@ -18244,7 +18244,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStarted(finishedWork);
-                    } else if ((flags & Layout2) !== NoFlags$1) {
+                    } else if ((flags & Layout) !== NoFlags$1) {
                       markComponentLayoutEffectMountStarted(finishedWork);
                     }
                   }
@@ -18263,7 +18263,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStopped();
-                    } else if ((flags & Layout2) !== NoFlags$1) {
+                    } else if ((flags & Layout) !== NoFlags$1) {
                       markComponentLayoutEffectMountStopped();
                     }
                   }
@@ -18271,7 +18271,7 @@
                     var destroy = effect.destroy;
                     if (destroy !== void 0 && typeof destroy !== "function") {
                       var hookName = void 0;
-                      if ((effect.tag & Layout2) !== NoFlags) {
+                      if ((effect.tag & Layout) !== NoFlags) {
                         hookName = "useLayoutEffect";
                       } else if ((effect.tag & Insertion) !== NoFlags) {
                         hookName = "useInsertionEffect";
@@ -18342,12 +18342,12 @@
                     if (finishedWork.mode & ProfileMode) {
                       try {
                         startLayoutEffectTimer();
-                        commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
+                        commitHookEffectListMount(Layout | HasEffect, finishedWork);
                       } finally {
                         recordLayoutEffectDuration(finishedWork);
                       }
                     } else {
-                      commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
+                      commitHookEffectListMount(Layout | HasEffect, finishedWork);
                     }
                   }
                   break;
@@ -18902,7 +18902,7 @@
                         if (destroy !== void 0) {
                           if ((tag & Insertion) !== NoFlags$1) {
                             safelyCallDestroy(deletedFiber, nearestMountedAncestor, destroy);
-                          } else if ((tag & Layout2) !== NoFlags$1) {
+                          } else if ((tag & Layout) !== NoFlags$1) {
                             {
                               markComponentLayoutEffectUnmountStarted(deletedFiber);
                             }
@@ -19054,14 +19054,14 @@
                   if (finishedWork.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
                     recordLayoutEffectDuration(finishedWork);
                   } else {
                     try {
-                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
@@ -19350,12 +19350,12 @@
                   if (fiber.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout2, fiber, fiber.return);
+                      commitHookEffectListUnmount(Layout, fiber, fiber.return);
                     } finally {
                       recordLayoutEffectDuration(fiber);
                     }
                   } else {
-                    commitHookEffectListUnmount(Layout2, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout, fiber, fiber.return);
                   }
                   break;
                 }
@@ -19638,7 +19638,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListMount(Layout2 | HasEffect, fiber);
+                    commitHookEffectListMount(Layout | HasEffect, fiber);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -19679,7 +19679,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListUnmount(Layout2 | HasEffect, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout | HasEffect, fiber, fiber.return);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -22865,8 +22865,8 @@
     }
   });
 
-  // src/index.tsx
-  var import_react4 = __toESM(require_react());
+  // node_modules/templates/src/index.tsx
+  var import_react3 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // ../../node_modules/.pnpm/react-router-dom@6.4.2_biqbaboplfbrettd7655fr4n2y/node_modules/react-router-dom/dist/index.js
@@ -23599,16 +23599,6 @@
       (!!options.replace ? navigator2.replace : navigator2.push)(path, options.state, options);
     }, [basename, navigator2, routePathnamesJson, locationPathname]);
     return navigate;
-  }
-  var OutletContext = /* @__PURE__ */ React.createContext(null);
-  function useOutlet(context) {
-    let outlet = React.useContext(RouteContext).outlet;
-    if (outlet) {
-      return /* @__PURE__ */ React.createElement(OutletContext.Provider, {
-        value: context
-      }, outlet);
-    }
-    return outlet;
   }
   function useResolvedPath(to, _temp2) {
     let {
@@ -24469,95 +24459,39 @@
     }, [callback]);
   }
 
-  // KeepAlive/index.tsx
+  // src/pages/Hello.tsx
   var import_react = __toESM(require_react());
-  var KeepAliveContext = (0, import_react.createContext)({ keepAlive: [], keepElements: {} });
-  var isKeepPath = (aliveList, path) => {
-    let isKeep = false;
-    aliveList.map((item) => {
-      if (item === path) {
-        isKeep = true;
-      }
-    });
-    return isKeep;
-  };
-  function useKeepOutlets() {
-    const location = useLocation();
-    const element = useOutlet();
-    const { keepElements, keepAlive } = (0, import_react.useContext)(KeepAliveContext);
-    const isKeep = isKeepPath(keepAlive, location.pathname);
-    if (isKeep) {
-      keepElements.current[location.pathname] = element;
-    }
-    return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, Object.entries(keepElements.current).map(([pathname, element2]) => /* @__PURE__ */ import_react.default.createElement("div", {
-      key: pathname,
-      style: { height: "100%", width: "100%", position: "relative", overflow: "hidden auto" },
-      className: "rumtime-keep-alive-layout",
-      hidden: !matchPath(location.pathname, pathname)
-    }, element2)), /* @__PURE__ */ import_react.default.createElement("div", {
-      style: { height: "100%", width: "100%", position: "relative", overflow: "hidden auto" },
-      className: "rumtime-keep-alive-layout-no"
-    }, !isKeep && element));
-  }
-  var KeepAliveLayout = (props) => {
-    const { keepAlive, ...other } = props;
-    const keepElements = (0, import_react.useRef)({});
-    function dropByCacheKey(path) {
-      keepElements.current[path] = null;
-    }
-    return /* @__PURE__ */ import_react.default.createElement(KeepAliveContext.Provider, {
-      value: { keepAlive, keepElements, dropByCacheKey },
-      ...other
-    });
-  };
-  var KeepAlive_default = KeepAliveLayout;
-
-  // src/Layout.tsx
-  var Layout = () => {
-    const { pathname } = useLocation();
-    const element = useKeepOutlets();
-    return element;
-  };
-  var Layout_default = Layout;
-
-  // src/Hello.tsx
-  var import_react2 = __toESM(require_react());
   var Hello = () => {
-    return /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", null, "Hello"), /* @__PURE__ */ import_react2.default.createElement(Link, {
+    return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", null, "Hello"), /* @__PURE__ */ import_react.default.createElement(Link, {
       to: "/users"
     }, "users"));
   };
   var Hello_default = Hello;
 
-  // src/Users.tsx
-  var import_react3 = __toESM(require_react());
+  // src/pages/Users.tsx
+  var import_react2 = __toESM(require_react());
   var Users = () => {
-    const [count, setCount] = (0, import_react3.useState)(0);
-    return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, /* @__PURE__ */ import_react3.default.createElement("div", null, "Users"), "count: ", count, " ", /* @__PURE__ */ import_react3.default.createElement("button", {
+    const [count, setCount] = (0, import_react2.useState)(0);
+    return /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", null, "Users"), "count: ", count, " ", /* @__PURE__ */ import_react2.default.createElement("button", {
       onClick: () => setCount((c) => c + 1)
-    }, "add"), /* @__PURE__ */ import_react3.default.createElement(Link, {
+    }, "add"), /* @__PURE__ */ import_react2.default.createElement(Link, {
       to: "/"
     }, "home"));
   };
   var Users_default = Users;
 
-  // src/index.tsx
+  // node_modules/templates/src/index.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react4.default.createElement(KeepAlive_default, {
-      keepAlive: ["/users"]
-    }, /* @__PURE__ */ import_react4.default.createElement(HashRouter, null, /* @__PURE__ */ import_react4.default.createElement(Routes, null, /* @__PURE__ */ import_react4.default.createElement(Route, {
-      path: "/",
-      element: /* @__PURE__ */ import_react4.default.createElement(Layout_default, null)
-    }, /* @__PURE__ */ import_react4.default.createElement(Route, {
-      path: "/",
-      element: /* @__PURE__ */ import_react4.default.createElement(Hello_default, null)
-    }), /* @__PURE__ */ import_react4.default.createElement(Route, {
-      path: "/users",
-      element: /* @__PURE__ */ import_react4.default.createElement(Users_default, null)
-    })))));
+    return /* @__PURE__ */ import_react3.default.createElement(HashRouter, null, /* @__PURE__ */ import_react3.default.createElement(Routes, null, /* @__PURE__ */ import_react3.default.createElement(Route, {
+      path: "/Hello",
+      element: /* @__PURE__ */ import_react3.default.createElement(Hello_default, null)
+    }), /* @__PURE__ */ import_react3.default.createElement(Route, {
+      path: "/Users",
+      element: /* @__PURE__ */ import_react3.default.createElement(Users_default, null)
+    })));
   };
   var root = import_react_dom.default.createRoot(document.getElementById("nmi"));
-  root.render(import_react4.default.createElement(App));
+  root.render(import_react3.default.createElement(App));
 })();
 /**
  * @license React
